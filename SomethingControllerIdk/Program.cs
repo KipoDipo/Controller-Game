@@ -6,9 +6,10 @@ class Program
 {
     public static RenderWindow window = new RenderWindow(new VideoMode(1920, 1080), "hello", Styles.Fullscreen, new ContextSettings() { AntialiasingLevel = 8 });
     public static Random rng = new Random();
+    public static float DeltaTime;
     static void Main()
     {
-        window.SetFramerateLimit(60);
+        window.SetFramerateLimit(144);
         //window.SetVerticalSyncEnabled(true);
 
         Queue<ButtonPrompt> sequence = new Queue<ButtonPrompt>();
@@ -51,8 +52,12 @@ class Program
         //};
 
         //ass.Position = new Vector2f(200, 200);
+        Time Time;
+        Clock deltaClock = new Clock();
         while (window.IsOpen)
         {
+            Time = deltaClock.Restart();
+            DeltaTime = 60f / (1f / Time.AsSeconds());
             Joystick.Update();
 
             //ass.Position += new Vector2f(0.1f, 0) * Joystick.GetAxisPosition(0, Joystick.Axis.X);
@@ -74,7 +79,7 @@ class Program
             if (sequence.Count > 0)
             {
                 sequence.Peek().Update(score);
-                if (sequence.Peek().Done && rng.Next(30) == 0)
+                if (sequence.Peek().Done && rng.Next((int)MathF.Round(30 / DeltaTime)) == 0)
                     sequence.Dequeue();
             }
 
