@@ -15,9 +15,6 @@ class Program
         Queue<ButtonPrompt> sequence = new Queue<ButtonPrompt>();
         Score score = new Score((Vector2f)window.Size * 0.66f, (int)MathF.Round(0.05f * window.Size.Y));
         Color bgColor = new Color(30, 30, 50);
-        //sequence.Enqueue(new ButtonPrompt(ButtonPrompt.Buttons.Circle));
-        //sequence.Enqueue(new ButtonPrompt(ButtonPrompt.Buttons.Triangle));
-        //sequence.Enqueue(new ButtonPrompt(ButtonPrompt.Buttons.Square));
 
         ButtonPrompt.ControllerType input = ButtonPrompt.ControllerType.Xbox;
         ButtonPrompt.ControllerType layout = ButtonPrompt.ControllerType.PlayStation;
@@ -26,7 +23,6 @@ class Program
         for (int i = 0; i < 100; i++)
         {
             int buttonType = rng.Next(3);
-            //sequence.Enqueue(new ButtonPrompt(rng.Next(4), rng.Next(100, 200) / 100f * 60, ButtonPrompt.ControllerType.Xbox));
             switch (buttonType)
             {
                 case 0:
