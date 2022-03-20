@@ -33,10 +33,10 @@ class Program
                     int[] buttons = new int[count];
                     for (int o = 0; o < count; o++)
                         buttons[o] = rng.Next(4);
-                    sequence.Enqueue(new ButtonPrompt(buttons, rng.Next(400 - i / 2, 500 - i / 2) / 100 * 60, position, input, layout));
+                    sequence.Enqueue(new ButtonPrompt(buttons, rng.Next(400 - i / 2, 500 - i / 2) / 100f * 60, position, input, layout));
                     break;
                 case 2:
-                    sequence.Enqueue(new ButtonPrompt(rng.Next(4), rng.Next(200 - i / 2, 300 - i / 2) / 100 * 60, rng.Next(3, 7), position, input, layout));
+                    sequence.Enqueue(new ButtonPrompt(rng.Next(4), rng.Next(200 - i / 2, 300 - i / 2) / 100f * 60, rng.Next(3, 7), position, input, layout));
                     break;
             }
         }
