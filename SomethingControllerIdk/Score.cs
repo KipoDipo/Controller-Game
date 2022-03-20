@@ -31,14 +31,13 @@ class Score
     {
         if (score > highScore)
             highScore = score;
-        this.score = 0;
+        score = 0;
         Update();
     }
     public void Update()
     {
         text.DisplayedString =
             "Score: " + score + "\n" +
-            "High Score: " + highScore;
-
+            "High Score: " + highScore + "\n";
     }
 }

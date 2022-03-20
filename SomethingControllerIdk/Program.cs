@@ -13,12 +13,13 @@ class Program
         window.SetVerticalSyncEnabled(true);
 
         Queue<ButtonPrompt> sequence = new Queue<ButtonPrompt>();
-        Score score = new Score((Vector2f)window.Size * 0.66f, (int)MathF.Round(0.05f * window.Size.Y));
+        //Score score = new Score((Vector2f)window.Size * 0.66f, (int)MathF.Round(0.05f * window.Size.Y));
+        Score score = new Score(new Vector2f(10,10), (int)MathF.Round(0.04f * window.Size.Y));
         Color bgColor = new Color(30, 30, 50);
 
         ButtonPrompt.ControllerType input = ButtonPrompt.ControllerType.Xbox;
         ButtonPrompt.ControllerType layout = ButtonPrompt.ControllerType.PlayStation;
-        Vector2f position = (Vector2f)window.Size / 2 /*+ new Vector2f(0, 300)*/;
+        Vector2f position = (Vector2f)window.Size / 2 + new Vector2f(0, 300);
 
         for (int i = 0; i < 100; i++)
         {
