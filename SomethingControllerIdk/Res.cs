@@ -27,6 +27,13 @@ interface Res
 
     private static Texture AddTexture(string path)
     {
-        return new Texture(@"res\" + path + ".png") { Smooth = true };
+        try
+        {
+            return new Texture(@"res\" + path + ".png") { Smooth = true };
+        }
+        catch (Exception)
+        {
+            return new Texture(1, 1);
+        }
     }
 }

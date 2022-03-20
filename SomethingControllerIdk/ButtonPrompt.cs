@@ -91,9 +91,9 @@ class ButtonPrompt : Program
     bool[] isHoldingButton = new bool[4];
     void SplashSpriteUpdate()
     {
-        SplashSprite.Scale += new Vector2f(1, 1) * 0.5f;
-        if (SplashSprite.Color.A - 5 >= 0)
-            SplashSprite.Color = new Color(255, 255, 255, (byte)(SplashSprite.Color.A - 5));
+        SplashSprite.Scale += new Vector2f(1, 1) * 0.5f * DeltaTime;
+        if (SplashSprite.Color.A - 5 * DeltaTime >= 0)
+            SplashSprite.Color = new Color(255, 255, 255, (byte)(SplashSprite.Color.A - 5 * DeltaTime));
     }
 
     void CreateSingle()
@@ -296,7 +296,7 @@ class ButtonPrompt : Program
                 Origin = Sprites[0].Origin,
                 Scale = Sprites[0].Scale
             };
-        if (tick % 5 == 0)
+        if (tick % (int)MathF.Round(5 / DeltaTime) == 0)
             Sprites[0].Scale = Sprites[0].Scale.X == 0.4f ? new Vector2f(0.5f, 0.5f) : new Vector2f(0.4f, 0.4f);
 
         CheckIfWrongButtonIsPressed(Buttons[0], score);
@@ -330,7 +330,7 @@ class ButtonPrompt : Program
     }
     void TimerUpdate(Score score, bool symmetrical = false)
     {
-        objectsToDelete += timerShpCount / (LifeSpan * (symmetrical ? 2 : 1));
+        objectsToDelete += timerShpCount / (LifeSpan * (symmetrical ? 2 : 1)) * DeltaTime;
         if (objectsToDelete >= 1 && TimerShape.Count > 0)
         {
             for (int i = 0; i < MathF.Floor(objectsToDelete); i++)
@@ -354,7 +354,7 @@ class ButtonPrompt : Program
 
     void SuccessSequence(int indx = 0)
     {
-        if (Sprites[indx].Color.A - 10 < 0)
+        if (Sprites[indx].Color.A - 10 * DeltaTime < 0)
         {
             Sprites[indx].Color = new Color(255, 255, 255, 0);
             if (success)
@@ -365,8 +365,8 @@ class ButtonPrompt : Program
             return;
         }
 
-        Sprites[indx].Scale += new Vector2f(1, 1) * 0.01f;
-        Sprites[indx].Color = new Color(255, 255, 255, (byte)(Sprites[indx].Color.A - 10));
+        Sprites[indx].Scale += new Vector2f(1, 1) * 0.01f * DeltaTime;
+        Sprites[indx].Color = new Color(255, 255, 255, (byte)(Sprites[indx].Color.A - 10f * DeltaTime));
         if (fail || success)
             foreach (var t in TimerShape)
                  t.Color = Sprites[indx].Color;
@@ -374,7 +374,7 @@ class ButtonPrompt : Program
     }
     void FailSequence(int indx = 0)
     {
-        if (Sprites[indx].Color.A - 5 < 0)
+        if (Sprites[indx].Color.A - 5 * DeltaTime < 0)
         {
             Sprites[indx].Color = new Color(255, 0, 0, 0);
             foreach (var t in TimerShape)
@@ -383,12 +383,11 @@ class ButtonPrompt : Program
             IsPressed[indx] = true;
             return;
         }
-        Sprites[indx].Position += failDir;
-        Sprites[indx].Color = new Color(255, 0, 0, (byte)(Sprites[indx].Color.A - 5));
+        Sprites[indx].Position += failDir * DeltaTime;
+        Sprites[indx].Color = new Color(255, 0, 0, (byte)(Sprites[indx].Color.A - 5 * DeltaTime));
         
         foreach (var t in TimerShape)
             t.Color = Sprites[indx].Color;
-
     }
 
     public enum PromptType
