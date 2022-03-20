@@ -6,7 +6,7 @@ class Program
 {
     public static RenderWindow window = new RenderWindow(new VideoMode(1920, 1080), "hello", Styles.Fullscreen, new ContextSettings() { AntialiasingLevel = 8 });
     public static Random rng = new Random();
-    public static float DeltaTime;
+    public static float DeltaTime = 1;
     static void Main()
     {
         //window.SetFramerateLimit(144);
@@ -15,7 +15,8 @@ class Program
         Queue<ButtonPrompt> sequence = new Queue<ButtonPrompt>();
         //Score score = new Score((Vector2f)window.Size * 0.66f, (int)MathF.Round(0.05f * window.Size.Y));
         Score score = new Score(new Vector2f(10,10), (int)MathF.Round(0.04f * window.Size.Y));
-        Color bgColor = new Color(30, 30, 50);
+        Stars sky = new Stars();
+        Color bgColor = new Color(0, 10, 30);
 
         ButtonPrompt.ControllerType input = ButtonPrompt.ControllerType.Xbox;
         ButtonPrompt.ControllerType layout = ButtonPrompt.ControllerType.PlayStation;
@@ -80,7 +81,14 @@ class Program
                     sequence.Dequeue();
             }
 
+            sky.Update();
+
+            /* =============== DRAW =============== */
+
             window.Clear(bgColor);
+
+            foreach (var s in sky.stars)
+                window.Draw(s.sprite);
 
             window.Draw(score.text);
             if (sequence.Count > 0)

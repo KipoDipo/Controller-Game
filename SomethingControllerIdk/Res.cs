@@ -25,6 +25,8 @@ interface Res
     static Texture button_splash = AddTexture("splash");
     static Texture timer = AddTexture("timer");
 
+    static Texture star = AddTexture("star");
+
     private static Texture AddTexture(string path)
     {
         try
@@ -33,7 +35,10 @@ interface Res
         }
         catch (Exception)
         {
-            return new Texture(1, 1);
+            RenderTexture renderTexture = new RenderTexture(50, 50);
+            renderTexture.Clear(new Color(255, 0, 255));
+            renderTexture.Display();
+            return renderTexture.Texture;
         }
     }
 }

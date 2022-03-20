@@ -296,7 +296,7 @@ class ButtonPrompt : Program
                 Origin = Sprites[0].Origin,
                 Scale = Sprites[0].Scale
             };
-        if (tick % (int)MathF.Round(5 / DeltaTime) == 0)
+        if (tick % ((int)MathF.Round(5 / DeltaTime) + 1) == 0)
             Sprites[0].Scale = Sprites[0].Scale.X == 0.4f ? new Vector2f(0.5f, 0.5f) : new Vector2f(0.4f, 0.4f);
 
         CheckIfWrongButtonIsPressed(Buttons[0], score);
