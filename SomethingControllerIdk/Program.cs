@@ -10,7 +10,7 @@ class Program
     public static float DeltaTime = 1;
     static void Main()
     {
-        //window.SetFramerateLimit(120);
+        //window.SetFramerateLimit(144);
         window.SetMouseCursorVisible(false);
         window.SetVerticalSyncEnabled(true);
 
@@ -50,6 +50,8 @@ class Program
         {
             Time = deltaClock.Restart();
             DeltaTime = 60f / (1f / Time.AsSeconds());
+            if (DeltaTime > 1)
+                DeltaTime = 1;
             Joystick.Update();
 
             if (Keyboard.IsKeyPressed(Keyboard.Key.Escape) || Joystick.IsButtonPressed(0, (uint)ButtonPrompt.PlayStationButtons.Start))
