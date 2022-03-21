@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SFML.Graphics;
+﻿using SFML.Graphics;
 using SFML.System;
 
 class Score
@@ -17,7 +12,9 @@ class Score
         text = new Text("", font, (uint)textSize)
         {
             Position = position,
-            FillColor = Color.White
+            FillColor = Color.White,
+            OutlineColor = Color.Black,
+            OutlineThickness = 5
         };
         Update();
     }

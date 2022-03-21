@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SFML.Graphics;
+﻿using SFML.Graphics;
 using SFML.System;
 using SFML.Window;
 
@@ -37,7 +32,7 @@ class ButtonPrompt : Program
         Layout = layout;
         Position = position;
         PromType = PromptType.Single;
-       
+
         CreateSingle();
     }
     public ButtonPrompt(int[] buttons, float lifeSpan, Vector2f position, ControllerType input, ControllerType layout)
@@ -163,7 +158,7 @@ class ButtonPrompt : Program
 
             Sprites[i].Origin = (Vector2f)Sprites[i].Texture.Size / 2f;
             // That shit down there is ugly as hell but it works
-            Sprites[i].Position = new Vector2f(Position.X - (Buttons.Length - 1) * Sprites[i].Texture.Size.X / 2 + ((Buttons.Length - 1) * Sprites[i].Texture.Size.X / 2) / 2, 0) + new Vector2f(i * Sprites[i].Texture.Size.X/2, Position.Y);
+            Sprites[i].Position = new Vector2f(Position.X - (Buttons.Length - 1) * Sprites[i].Texture.Size.X / 2 + ((Buttons.Length - 1) * Sprites[i].Texture.Size.X / 2) / 2, 0) + new Vector2f(i * Sprites[i].Texture.Size.X / 2, Position.Y);
             Sprites[i].Scale = new Vector2f(0.5f, 0.5f);
             failDir = new Vector2f(rng.Next(-100, 100) / 100f, rng.Next(50, 100) / 100f);
         }
@@ -171,7 +166,7 @@ class ButtonPrompt : Program
         {
             Origin = Sprites[0].Origin,
             Position = Position,
-            Scale = new Vector2f(MathF.Ceiling((Buttons.Length + 1)/2f), 0.2f)
+            Scale = new Vector2f(MathF.Ceiling((Buttons.Length + 1) / 2f), 0.2f)
         };
 
         float timerShpInterval = 25;
@@ -179,7 +174,7 @@ class ButtonPrompt : Program
         {
             TimerShape.Add(new Sprite(Res.timer)
             {
-                Position = new Vector2f( 
+                Position = new Vector2f(
                    Position.X - ((timerShpCount - 1) * timerShpInterval) / 2 + i * timerShpInterval,
                    Position.Y + 150
                 ),
@@ -295,14 +290,12 @@ class ButtonPrompt : Program
                 Origin = Sprites[0].Origin,
                 Scale = Sprites[0].Scale
             };
-        if (tick % ((int)MathF.Round(5 / DeltaTime) + 1) == 0)
+        if (tick % MathF.Round(5f / DeltaTime) == 0)
             Sprites[0].Scale = Sprites[0].Scale.X == 0.4f ? new Vector2f(0.5f, 0.5f) : new Vector2f(0.4f, 0.4f);
-
-        CheckIfWrongButtonIsPressed(Buttons[0], score);
-
+        Console.WriteLine(MathF.Round(5f / DeltaTime));
         if (!isHoldingButton[Buttons[0]] && Joystick.IsButtonPressed(0, Buttons[0]))
             IsPressed[PressedButtonsCount] = true;
-        
+
         TimerUpdate(score);
 
         CheckControllerButtonsState();
@@ -337,7 +330,7 @@ class ButtonPrompt : Program
                 if (TimerShape.Count <= 0)
                     break;
                 TimerShape.Remove(TimerShape[0]);
-                if (symmetrical) 
+                if (symmetrical)
                     if (TimerShape.Count > 0)
                         TimerShape.Remove(TimerShape[^1]);
             }
@@ -358,7 +351,7 @@ class ButtonPrompt : Program
             Sprites[indx].Color = new Color(255, 255, 255, 0);
             if (success)
                 foreach (var t in TimerShape)
-                t.Color = Sprites[indx].Color;
+                    t.Color = Sprites[indx].Color;
             //Sprites.Remove(Sprites[indx]);
             IsPressed[indx] = true;
             return;
@@ -368,7 +361,7 @@ class ButtonPrompt : Program
         Sprites[indx].Color = new Color(255, 255, 255, (byte)(Sprites[indx].Color.A - 10f * DeltaTime));
         if (fail || success)
             foreach (var t in TimerShape)
-                 t.Color = Sprites[indx].Color;
+                t.Color = Sprites[indx].Color;
 
     }
     void FailSequence(int indx = 0)
@@ -384,7 +377,7 @@ class ButtonPrompt : Program
         }
         Sprites[indx].Position += failDir * DeltaTime;
         Sprites[indx].Color = new Color(255, 0, 0, (byte)(Sprites[indx].Color.A - 5 * DeltaTime));
-        
+
         foreach (var t in TimerShape)
             t.Color = Sprites[indx].Color;
     }

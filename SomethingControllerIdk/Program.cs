@@ -10,11 +10,11 @@ class Program
     public static float DeltaTime = 1;
     static void Main()
     {
-        //window.SetFramerateLimit(144);
+        //window.SetFramerateLimit(120);
         window.SetVerticalSyncEnabled(true);
 
         Queue<ButtonPrompt> sequence = new Queue<ButtonPrompt>();
-        Score score = new Score(new Vector2f(10,10), (int)MathF.Round(0.04f * window.Size.Y));
+        Score score = new Score(new Vector2f(10, 10), (int)MathF.Round(0.04f * window.Size.Y));
         Stars sky = new Stars();
         Color bgColor = new Color(0, 10, 30);
 
@@ -28,7 +28,7 @@ class Program
             switch (buttonType)
             {
                 case 0:
-                    sequence.Enqueue(new ButtonPrompt(rng.Next(4), rng.Next(100 - i/2, 200 - i/2) / 100f * 60, position, input, layout));
+                    sequence.Enqueue(new ButtonPrompt(rng.Next(4), rng.Next(100 - i / 2, 200 - i / 2) / 100f * 60, position, input, layout));
                     break;
                 case 1:
                     int count = rng.Next(3, 6);

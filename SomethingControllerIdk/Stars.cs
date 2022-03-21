@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SFML.Graphics;
+﻿using SFML.Graphics;
 using SFML.System;
 
 class Stars : Program
@@ -24,7 +19,7 @@ class Stars : Program
         for (int i = 0; i < stars.Count; i++)
         {
             stars[i].sprite.Position -= stars[i].normalizedDirection * 3 * ((stars[i].aliveTicks * DeltaTime) / 100f) * DeltaTime;
-            
+
             stars[i].aliveTicks++;
 
             if (stars[i].sprite.Color.A < 255 - 5)
