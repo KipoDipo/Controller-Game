@@ -3,12 +3,17 @@ using SFML.System;
 
 class Stars : Program
 {
-    public List<Star> stars = new List<Star>();
+    List<Star> stars = new List<Star>();
 
     List<int> toRemove = new List<int>();
+    RenderTexture texture = new RenderTexture(window.Size.X, window.Size.Y);
+    public Sprite sprite;
+
+    FloatRect windowsBounds = new FloatRect(-Res.stars[0].Size.X, -Res.stars[0].Size.Y, window.Size.X, window.Size.Y);
 
     public Stars()
     {
+        sprite = new Sprite(texture.Texture);
         for (int i = 0; i < 256; i++)
             AddRandomStar();
     }
@@ -16,6 +21,7 @@ class Stars : Program
     int tick;
     public void Update()
     {
+        texture.Clear(Color.Transparent);
         for (int i = 0; i < stars.Count; i++)
         {
             stars[i].sprite.Position -= stars[i].normalizedDirection * 3 * ((stars[i].aliveTicks * DeltaTime) / 100f) * DeltaTime;
@@ -27,14 +33,17 @@ class Stars : Program
 
             stars[i].sprite.Scale += new Vector2f(0.01f, 0.01f) * DeltaTime;
 
-            if (stars[i].sprite.Position.X > window.Size.X ||
-                stars[i].sprite.Position.X < -stars[i].sprite.Scale.X * stars[i].sprite.Texture.Size.X ||
-                stars[i].sprite.Position.Y > window.Size.Y ||
-                stars[i].sprite.Position.Y < -stars[i].sprite.Scale.Y * stars[i].sprite.Texture.Size.Y)
+            if (stars[i].sprite.Position.X > windowsBounds.Width ||
+                stars[i].sprite.Position.X < windowsBounds.Left * stars[i].sprite.Scale.X ||
+                stars[i].sprite.Position.Y > windowsBounds.Height ||
+                stars[i].sprite.Position.Y < windowsBounds.Top * stars[i].sprite.Scale.Y)
             {
                 toRemove.Add(i);
+                continue;
             }
+            texture.Draw(stars[i].sprite);
         }
+        texture.Display();
         foreach (var remove in toRemove)
             stars[remove].aliveTicks = -1;
 

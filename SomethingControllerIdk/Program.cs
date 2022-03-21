@@ -10,6 +10,7 @@ class Program
     public static float DeltaTime = 1;
     static void Main()
     {
+        //window.SetView(new View(new FloatRect(-1920, -1080, 1920 * 3, 1080 * 3))); // for out of bounds view
         //window.SetFramerateLimit(144);
         window.SetMouseCursorVisible(false);
         window.SetVerticalSyncEnabled(true);
@@ -80,9 +81,9 @@ class Program
 
             window.Clear(bgColor);
 
-            foreach (var s in sky.stars)
-                window.Draw(s.sprite);
-
+            //foreach (var s in sky.stars)
+            //    window.Draw(s.sprite);
+            window.Draw(sky.sprite);
             window.Draw(score.text);
             if (sequence.Count > 0)
             {
