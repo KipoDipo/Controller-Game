@@ -9,7 +9,7 @@ class ButtonPrompt : Program
     public List<Sprite> TimerShape = new List<Sprite>();
     public List<bool> IsPressed = new List<bool>();
 
-    int timerShpCount = 32;
+    int timerShpCount = 33;
 
     public uint[] Buttons;
     public float LifeSpan;
@@ -169,7 +169,7 @@ class ButtonPrompt : Program
             Scale = new Vector2f(MathF.Ceiling((Buttons.Length + 1) / 2f), 0.2f)
         };
 
-        float timerShpInterval = 25;
+        float timerShpInterval = 1f/timerShpCount * window.Size.X/2f;
         for (int i = 0; i < timerShpCount; i++)
         {
             TimerShape.Add(new Sprite(Res.timer)
