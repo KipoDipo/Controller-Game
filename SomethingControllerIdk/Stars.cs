@@ -23,7 +23,7 @@ class Stars : Program
     {
         for (int i = 0; i < stars.Count; i++)
         {
-            stars[i].sprite.Position -= stars[i].normalizedDirection * 3 * (stars[i].aliveTicks / 100f) * DeltaTime;
+            stars[i].sprite.Position -= stars[i].normalizedDirection * 3 * ((stars[i].aliveTicks * DeltaTime) / 100f) * DeltaTime;
             
             stars[i].aliveTicks++;
 
@@ -59,14 +59,14 @@ class Stars : Program
     void AddRandomStar()
     {
         stars.Add(new Star());
-        stars[^1].sprite = new Sprite(Res.star)
+        stars[^1].sprite = new Sprite(Res.stars[rng.Next(Res.stars.Length)])
         {
             Position = new Vector2f(rng.Next(1920), rng.Next(1080)),
             Color = new Color(255, 255, 255, 0),
             Scale = new Vector2f(0.1f, 0.1f)
         };
         stars[^1].startingPosition = stars[^1].sprite.Position;
-        stars[^1].aliveTicks = 0;
+        stars[^1].aliveTicks = rng.Next(120);
 
         Vector2f dir = (Vector2f)window.Size / 2f - stars[^1].startingPosition;
         Vector2f normalizedDirection = dir / MathF.Sqrt(dir.X * dir.X + dir.Y * dir.Y);

@@ -25,7 +25,7 @@ interface Res
     static Texture button_splash = AddTexture("splash");
     static Texture timer = AddTexture("timer");
 
-    static Texture star = AddTexture("star");
+    static Texture[] stars = AddTextures("star");
 
     private static Texture AddTexture(string path)
     {
@@ -40,5 +40,16 @@ interface Res
             renderTexture.Display();
             return renderTexture.Texture;
         }
+    }
+    private static Texture[] AddTextures(string path)
+    {
+        int indx = 0;
+        List<Texture> textures = new List<Texture>();
+        while (File.Exists(@"res\" + path + indx + ".png"))
+        {
+            textures.Add(new Texture(@"res\" + path + indx + ".png") { Smooth = true });
+            indx++;
+        }
+        return textures.ToArray();
     }
 }

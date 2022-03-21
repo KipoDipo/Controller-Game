@@ -9,8 +9,8 @@ class Program
     public static float DeltaTime = 1;
     static void Main()
     {
-        //window.SetFramerateLimit(144);
-        window.SetVerticalSyncEnabled(true);
+        window.SetFramerateLimit(144);
+        //window.SetVerticalSyncEnabled(true);
 
         Queue<ButtonPrompt> sequence = new Queue<ButtonPrompt>();
         //Score score = new Score((Vector2f)window.Size * 0.66f, (int)MathF.Round(0.05f * window.Size.Y));
