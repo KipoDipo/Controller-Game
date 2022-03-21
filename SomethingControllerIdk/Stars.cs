@@ -40,7 +40,7 @@ class Stars : Program
                 toRemove.Add(i);
             }
         }
-        foreach (var remove in toRemove.ToArray())
+        foreach (var remove in toRemove)
             stars[remove].aliveTicks = -1;
 
         List<Star> newStarsList = new List<Star>();
@@ -66,7 +66,7 @@ class Stars : Program
             Scale = new Vector2f(0.1f, 0.1f)
         };
         stars[^1].startingPosition = stars[^1].sprite.Position;
-        stars[^1].aliveTicks = rng.Next(120);
+        stars[^1].aliveTicks = 0;
 
         Vector2f dir = (Vector2f)window.Size / 2f - stars[^1].startingPosition;
         Vector2f normalizedDirection = dir / MathF.Sqrt(dir.X * dir.X + dir.Y * dir.Y);

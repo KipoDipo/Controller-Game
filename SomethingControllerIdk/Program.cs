@@ -5,6 +5,7 @@ using SFML.Window;
 class Program
 {
     public static RenderWindow window = new RenderWindow(new VideoMode(1920, 1080), "hello", Styles.Fullscreen, new ContextSettings() { AntialiasingLevel = 8 });
+    //public static RenderWindow window = new RenderWindow(new VideoMode(1500, 900), "hello", Styles.Default, new ContextSettings() { AntialiasingLevel = 8 });
     public static Random rng = new Random();
     public static float DeltaTime = 1;
     static void Main()
@@ -13,14 +14,13 @@ class Program
         window.SetVerticalSyncEnabled(true);
 
         Queue<ButtonPrompt> sequence = new Queue<ButtonPrompt>();
-        //Score score = new Score((Vector2f)window.Size * 0.66f, (int)MathF.Round(0.05f * window.Size.Y));
         Score score = new Score(new Vector2f(10,10), (int)MathF.Round(0.04f * window.Size.Y));
         Stars sky = new Stars();
         Color bgColor = new Color(0, 10, 30);
 
         ButtonPrompt.ControllerType input = ButtonPrompt.ControllerType.Xbox;
         ButtonPrompt.ControllerType layout = ButtonPrompt.ControllerType.PlayStation;
-        Vector2f position = (Vector2f)window.Size / 2 + new Vector2f(0, 300);
+        Vector2f position = new Vector2f(window.Size.X / 2, window.Size.Y * 0.80f);
 
         for (int i = 0; i < 100; i++)
         {
@@ -43,13 +43,6 @@ class Program
             }
         }
 
-        //CircleShape ass = new CircleShape()
-        //{
-        //    FillColor = Color.Cyan,
-        //    Radius = 50
-        //};
-
-        //ass.Position = new Vector2f(200, 200);
         Time Time;
         Clock deltaClock = new Clock();
         while (window.IsOpen)
@@ -57,9 +50,6 @@ class Program
             Time = deltaClock.Restart();
             DeltaTime = 60f / (1f / Time.AsSeconds());
             Joystick.Update();
-
-            //ass.Position += new Vector2f(0.1f, 0) * Joystick.GetAxisPosition(0, Joystick.Axis.X);
-            //ass.Position += new Vector2f(0, 0.1f) * Joystick.GetAxisPosition(0, Joystick.Axis.Y);
 
             if (Keyboard.IsKeyPressed(Keyboard.Key.Escape) || Joystick.IsButtonPressed(0, (uint)ButtonPrompt.PlayStationButtons.Start))
                 Environment.Exit(0);
@@ -99,7 +89,6 @@ class Program
                     window.Draw(timer);
                 window.Draw(sequence.Peek().SplashSprite);
             }
-            //window.Draw(ass);
 
             window.Display();
             window.DispatchEvents();
