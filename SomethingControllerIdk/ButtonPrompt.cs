@@ -22,7 +22,7 @@ class ButtonPrompt : Program
     ControllerType Input; // TODO: Support for *both* PS4 and Xbox controllers
     ControllerType Layout;
 
-    int tick;
+    Clock clock = new Clock();
 
     public ButtonPrompt(int button, float lifeSpan, Vector2f position, ControllerType input, ControllerType layout)
     {
@@ -56,7 +56,6 @@ class ButtonPrompt : Program
         LifeSpan = lifeSpan;
         Position = position;
         PromType = PromptType.Mash;
-
         CreateMash(mashCount);
     }
 
@@ -80,7 +79,6 @@ class ButtonPrompt : Program
             default:
                 break;
         }
-        tick++;
     }
 
     bool[] isHoldingButton = new bool[4];
@@ -224,7 +222,6 @@ class ButtonPrompt : Program
 
         if (!success)
             TimerUpdate(score, true);
-
         CheckControllerButtonsState();
     }
 
@@ -283,18 +280,23 @@ class ButtonPrompt : Program
             return;
         }
 
-        if (SplashSprite.Color.A < 150)
+        if (SplashSprite.Scale.X > 10)
             SplashSprite = new Sprite(SplashSprite.Texture)
             {
                 Position = Sprites[0].Position,
                 Origin = Sprites[0].Origin,
                 Scale = Sprites[0].Scale
             };
-        if (tick % MathF.Round(5f / DeltaTime) == 0)
+
+        if (clock.ElapsedTime.AsMilliseconds() > 150)
+        {
+            clock.Restart();
             Sprites[0].Scale = Sprites[0].Scale.X == 0.4f ? new Vector2f(0.5f, 0.5f) : new Vector2f(0.4f, 0.4f);
-        Console.WriteLine(MathF.Round(5f / DeltaTime));
+        }
+
         if (!isHoldingButton[Buttons[0]] && Joystick.IsButtonPressed(0, Buttons[0]))
             IsPressed[PressedButtonsCount] = true;
+        CheckIfWrongButtonIsPressed(Buttons[0], score);
 
         TimerUpdate(score);
 
