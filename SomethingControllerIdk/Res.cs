@@ -22,6 +22,8 @@ interface Res
 
     static Texture[] stars = AddTextures("star");
 
+    static Font font = new Font(@"res\ARLRDBD.TTF");
+
     private static Texture AddTexture(string path)
     {
         try

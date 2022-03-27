@@ -167,7 +167,7 @@ class ButtonPrompt : Program
             Scale = new Vector2f(MathF.Ceiling((Buttons.Length + 1) / 2f), 0.2f)
         };
 
-        float timerShpInterval = 1f/timerShpCount * window.Size.X/2f;
+        float timerShpInterval = 1f/timerShpCount * WIN_DIM.X/2f;
         for (int i = 0; i < timerShpCount; i++)
         {
             TimerShape.Add(new Sprite(Res.timer)

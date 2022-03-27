@@ -8,20 +8,24 @@ class Program
     //public static RenderWindow window = new RenderWindow(new VideoMode(1500, 900), "hello", Styles.Default, new ContextSettings() { AntialiasingLevel = 8 });
     public static Random rng = new Random();
     public static float DeltaTime = 1;
+
+    public static Vector2u WIN_DIM = new Vector2u(1920, 1080);
+
     static void Main()
     {
         //window.SetView(new View(new FloatRect(-1920, -1080, 1920 * 3, 1080 * 3))); // for out of bounds view
         //window.SetFramerateLimit(60);
         window.SetMouseCursorVisible(false);
-        window.SetVerticalSyncEnabled(true);
+        window.SetView(new View(new FloatRect(0, 0, 1920, 1080)));
+        //window.SetVerticalSyncEnabled(true);
 
         Queue<ButtonPrompt> sequence = new Queue<ButtonPrompt>();
-        Score score = new Score(new Vector2f(10, 10), (int)MathF.Round(0.04f * window.Size.Y));
+        Score score = new Score(new Vector2f(10, 10), (int)MathF.Round(0.04f * WIN_DIM.Y));
         Stars sky = new Stars();
         Color bgColor = new Color(0, 10, 30);
         ButtonPrompt.ControllerType input = ButtonPrompt.ControllerType.Xbox;
         ButtonPrompt.ControllerType layout = ButtonPrompt.ControllerType.PlayStation;
-        Vector2f position = new Vector2f(window.Size.X / 2, window.Size.Y * 0.80f);
+        Vector2f position = new Vector2f(WIN_DIM.X / 2, WIN_DIM.Y * 0.80f);
 
         int tick = 0;
 
@@ -46,20 +50,30 @@ class Program
             }
         }
 
+        Text fps = new Text("", Res.font)
+        {
+            CharacterSize = 20,
+            FillColor = Color.Green,
+            Position = new Vector2f(0, WIN_DIM.Y - 20),
+        };
+
         Clock deltaClock = new Clock();
         Clock clock = new Clock();
+        float fpsLast = 0;
+
         while (window.IsOpen)
         {
-            float LastDelta = DeltaTime;
             DeltaTime = 60 * deltaClock.Restart().AsSeconds();
-            //if (DeltaTime - LastDelta > 1) // If there are some hiccups in framerate, try to combat them
-            //    DeltaTime = LastDelta;
             Joystick.Update();
+
+            if (clock.ElapsedTime.AsMilliseconds() - fpsLast > 100) // update fps counter every 100ms
+            {
+                fpsLast = clock.ElapsedTime.AsMilliseconds();
+                fps.DisplayedString = "FPS: " + MathF.Round(1f / (DeltaTime / 60f)).ToString();
+            }
 
             if (Keyboard.IsKeyPressed(Keyboard.Key.Escape) || Joystick.IsButtonPressed(0, (uint)ButtonPrompt.PlayStationButtons.Start))
                 Environment.Exit(0);
-
-            
 
             if (Keyboard.IsKeyPressed(Keyboard.Key.Num3))
                 window.SetFramerateLimit(10);
@@ -69,6 +83,9 @@ class Program
 
             if (Keyboard.IsKeyPressed(Keyboard.Key.Num5))
                 window.SetFramerateLimit(144);
+
+            if (Keyboard.IsKeyPressed(Keyboard.Key.Num6))
+                window.SetFramerateLimit(0);
 
             if (Keyboard.IsKeyPressed(Keyboard.Key.Num1))
                 foreach (var s in sequence)
@@ -94,8 +111,6 @@ class Program
 
             window.Clear(bgColor);
 
-            //foreach (var s in sky.stars)
-            //    window.Draw(s.sprite);
             window.Draw(sky.sprite);
             window.Draw(score.text);
             if (clock.ElapsedTime.AsSeconds() > 3)
@@ -107,6 +122,7 @@ class Program
                         window.Draw(timer);
                     window.Draw(sequence.Peek().SplashSprite);
                 }
+            window.Draw(fps);
 
             window.Display();
             window.DispatchEvents();

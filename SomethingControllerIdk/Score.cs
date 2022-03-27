@@ -6,7 +6,7 @@ class Score
     public Text text;
     int score;
     int highScore;
-    Font font = new Font(@"res\ARLRDBD.TTF");
+    Font font = Res.font;
     public Score(Vector2f position, int textSize)
     {
         text = new Text("", font, (uint)textSize)

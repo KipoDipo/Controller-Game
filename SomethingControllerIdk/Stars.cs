@@ -6,10 +6,10 @@ class Stars : Program
     List<Star> stars = new List<Star>();
 
     List<int> toRemove = new List<int>();
-    RenderTexture texture = new RenderTexture(window.Size.X, window.Size.Y);
+    RenderTexture texture = new RenderTexture(WIN_DIM.X, WIN_DIM.Y);
     public Sprite sprite;
 
-    FloatRect windowsBounds = new FloatRect(-Res.stars[0].Size.X, -Res.stars[0].Size.Y, window.Size.X, window.Size.Y);
+    FloatRect windowsBounds = new FloatRect(-Res.stars[0].Size.X, -Res.stars[0].Size.Y, WIN_DIM.X, WIN_DIM.Y);
 
     public Stars()
     {
@@ -76,7 +76,7 @@ class Stars : Program
         stars[^1].startingPosition = stars[^1].sprite.Position;
         stars[^1].dead = false;
 
-        Vector2f dir = (Vector2f)window.Size / 2f - stars[^1].startingPosition;
+        Vector2f dir = (Vector2f)WIN_DIM / 2f - stars[^1].startingPosition;
         Vector2f normalizedDirection = dir / MathF.Sqrt(dir.X * dir.X + dir.Y * dir.Y);
         stars[^1].normalizedDirection = normalizedDirection;
     }
